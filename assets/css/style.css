@@ -1,6 +1,8 @@
-/* some _slight_ refactoring needed here (shorthand of padding/margin, MAYBE a color variable) */
+/* Some slight refactoring added; mostly just changing some padding/margin to shorthand */
+/* There are two colors which are each used twice -- I felt it wasn't enough to merit adding a variable for them */
 
-
+/* Broad scope styling */
+/* ------------------- */
 *,
 *::before,
 *::after {
@@ -21,18 +23,17 @@ body {
 }
 
 .wrapper {
-  padding-top: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 30px 20px 0;
 }
 
 header {
   text-align: center;
-  padding: 20px;
-  padding-top: 0px;
+  padding: 0 20px 20px;
   color: hsl(206, 17%, 28%);
 }
 
+/* Begin 'main' section styling */
+/* ---------------------------- */
 .card {
   background-color: hsl(0, 0%, 100%);
   border-radius: 5px;
@@ -91,15 +92,19 @@ header {
   cursor: pointer;
 }
 
+/* Change the button's color/cursor if it becomes disabled */
 button[disabled] {
   cursor: default;
   background: #c0c7cf;
 }
 
+/* Not sure where this class comes into play.. it may not.. */
 .float-right {
   float: right;
 }
 
+
+/* This is the 'textarea' which will show the password once created */
 #password {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -107,20 +112,21 @@ button[disabled] {
   border: none;
   display: block;
   width: 100%;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 85px;
+  padding: 15px 15px 85px;
   font-size: 1.2rem;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   border: 2px dashed #c0c7cf;
   border-radius: 6px;
   resize: none;
   overflow: hidden;
 }
+/* -------------------------- */
+/* End 'main' section styling */
 
+
+/* Media queries */
+/* ------------- */
 @media (max-width: 690px) {
   .btn {
     font-size: 1rem;

@@ -130,6 +130,9 @@ function generatePassword() {
   // Resetting 'set count' to 0 in case user wants to go through the process again, without reloading
   numSets = 0;
 
+  // Disables the button (there is some CSS styling for this status); however, I chose to not do this (see above line)
+  // generateBtn.disabled = true;
+
   return resultString
 }
 
