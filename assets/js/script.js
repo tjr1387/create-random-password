@@ -17,7 +17,7 @@ const options = {
   },
   special : {
     include : true,
-    set : '!@#$%^&*'.split('') // need to ensure what this set should have in it.. right now its just a few
+    set : '!@#$%^&*~'.split('') // need to ensure what this set should have in it.. right now its just a few
   }
 }
 
@@ -41,6 +41,23 @@ function writePassword() {
 function randChar(array) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex]
+}
+
+// The Fisher-Yates shuffle algorithm for JS!
+  // I did not make this, I am just using it
+function shuffleArray(array) {
+  let currentIndex = array.length;
+  // While there are remaining elements to shuffle..
+  while (0 !== currentIndex) {
+    // Picks a remaining element
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // Swaps it with the current element
+    let temp = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temp;
+  }
+  return array;
 }
 
 // Generates a password based on criteria provided by the user (one prompt for password length, four boolean 'confirms' for character sets)
@@ -97,13 +114,11 @@ function generatePassword() {
     genLoopIters--;
   }
   
-//i may want to add jumble functionality before turning the array into a string
-// ..
-// ..
-//to be continued
+  // Shuffles the array using the above shuffle algorithm
+  let shuffledArray = shuffleArray(resultArray);
 
   // Turns the array into a string
-  let resultString = resultArray.join('');
+  let resultString = shuffledArray.join('');
 
   // Identifies the overshoot in length, if it exists
   let excessChars = resultString.length - passwordLength;
@@ -121,8 +136,3 @@ function generatePassword() {
 
 // Add event listener to generate button, and being the series of prompts to make password
 generateBtn.addEventListener("click", writePassword);
-
-
-
-
-
