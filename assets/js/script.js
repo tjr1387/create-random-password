@@ -1,7 +1,7 @@
 const generateBtn = document.querySelector("#generate");
 
-// object of the 4 different set options; for each, an object with their set (array), and a boolean for whether to include them
-  //splitting a string of the charsets make it faster to build the array than typing it out manually!
+// Object of the 4 different set options; for each, an object with their set (array), and a boolean for whether to include them (tied to the 'confirms')
+  // Splitting a string of the charsets make it faster to build the array than typing it out manually!
 const options = {
   lower : {
     include : true,
@@ -21,12 +21,11 @@ const options = {
   }
 }
 
-// initializing a value for length of password and setting a default value
+// Initializing a variable for length of password; setting a default value
 let passwordLength = 25;
 
-//a counter of the sets that were chosen (0-4 possible)
+// This will count the sets that were chosen (0-4 possible)
 let numSets = 0;
-
 
 // Write password to the #password input
 function writePassword() {
@@ -37,41 +36,93 @@ function writePassword() {
 
 }
 
+// Helper function for the primary one; returns one random element from a given array
+  // Compartmentalizing this piece helped me visualize the critical loop that will build the password
+function randChar(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex]
+}
+
 // Generates a password based on criteria provided by the user (one prompt for password length, four boolean 'confirms' for character sets)
 function generatePassword() {
   passwordLength = parseInt(prompt("Please choose a length for your password, between 8-128 characters (default is 25).", 25));
 
-  // re-prompts for invalid inputs -- because im using 'parseInt', a lot of invalid inputs will become 'NaN'
-    // the 2nd and 3rd conditions are obvious, but would both be false if compared to 'NaN' (thus clearing the loop), which is why the first condition is necessary
+  // Re-prompts on invalid inputs; because im using 'parseInt', a lot of invalid inputs will become 'NaN'..
+    // The 2nd and 3rd conditions are obvious, but would both be false if compared to 'NaN' (thus clearing the loop), which is why the first condition is necessary
   while (!passwordLength || passwordLength > 128 || passwordLength < 8) {
     passwordLength = parseInt(prompt("Invalid input. Please pick a number between 8-128."));
   }
 
-  // this is the section where the options are selected
-  // numSets will start off as zero, so we'll get in here once -- it'll only loop again if user selects NO for all options
+  // Option selection block
+  // numSets will start off as zero, so we'll get in here once; it'll only loop again if user selects NO for all options
   while (numSets === 0) {
     options.lower.include = confirm("Would you like lowercase letters? (OK = YES; Cancel = NO)");
     options.upper.include = confirm("Would you like uppercase letters? (OK = YES; Cancel = NO)");
     options.number.include = confirm("Would you like numeric characters? (OK = YES; Cancel = NO)");
     options.special.include = confirm("Would you like special characters? (OK = YES; Cancel = NO)");
 
-  // this loop checks the boolean values of each set -- if NONE are selected, then the user will have to run through the 'confirms' again
+  // Checks the boolean values of each set (based on the 'confirms') -- if NONE are selected, then the user will have to run through the 'confirms' again
     for (let [key, value] of Object.entries(options)) {
       if (options[key].include) {
         numSets++;
       }
     }
 
-  // I only want this alert to show if the user went through everything once and still didn't pick anything
+  // I only want this alert to show if the user went through everything once and didn't pick anything
     if (numSets === 0) {
       alert("You have to pick at least one set! Let's try this again..");
     }
   }
 
+  // Begin password build; I'm doing it this way to get an equal (or close) number of characters from each selected set in the password
+    // I'm going to overshoot on the character total, in order to complete a full for loop of the for the 'true' sets, then chop the excess off after
+    
+  let genLoopIters = Math.floor(passwordLength / numSets) + 1;
+
+  //If there's no remainder, I actually don't want the '+1' added to it -- the odds are higher there IS a remainder than not, which is why I started at '+1' and pulled it back (instead of vice versa)
+  if (passwordLength % numSets === 0) {
+    genLoopIters--;
+  }
+
+  // This will start empty, and I'll add one character at a time to it, utilizing that helper function I made
+  const resultArray = [];
+
+  // Best part of the code! This is actually builds the password
+  while (genLoopIters > 0) {
+    for (let [key, value] of Object.entries(options)) {
+      if (options[key].include) {
+        resultArray.push(randChar(options[key].set));
+      }
+    }
+    genLoopIters--;
+  }
+  
+//i may want to add jumble functionality before turning the array into a string
+// ..
+// ..
+//to be continued
+
+  // Turns the array into a string
+  let resultString = resultArray.join('');
+
+  // Identifies the overshoot in length, if it exists
+  let excessChars = resultString.length - passwordLength;
+  // Easiest way to chop the excess characters off; it does it from the start of the string, but that doesn't really matter for this
+  if (excessChars > 0) {
+    resultString = resultString.slice(excessChars);
+  }
+
+  // Resetting 'set count' to 0 in case user wants to go through the process again, without reloading
+  numSets = 0;
+
+  return resultString
 }
-
-
 
 
 // Add event listener to generate button, and being the series of prompts to make password
 generateBtn.addEventListener("click", writePassword);
+
+
+
+
+
