@@ -17,7 +17,7 @@ The user will be able to provide parameters for a password to be automatically g
 Screenshot:
 ![The page with a 'maxed out' RNG password (Max chars, all sets)](/assets/my-mockup.png?raw=true "MAX PASSWORD!")
 
-Link to live site: 
+Link to live site: https://tjr1387.github.io/create-random-password/
 
 ## Flaws
 
