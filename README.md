@@ -1,10 +1,10 @@
 
 # Week 3 Homework Challenge
-# Creating a random, customized password
+## Creating a random, customized password
 
 ## Description
 
-The intention of this repo is to take an existing 'password generator' page and add the core functionality to actually make the password. A series of prompts will ask the user to define the character sets they want in the password; the password will then be automatically created based on the character sets chosen.
+The intention of this repo is to take an existing 'password generator' page and add the core functionality to actually make the password. A series of prompts will ask the user to define the character sets they want in the password; the password will then be automatically created and displayed based on the character sets chosen.
 
 ## Installation
 
@@ -23,6 +23,8 @@ Link to live site:
 In the effort of trying to get an equal number of characters from the selected sets into the password, I figured a good way to do it was loop through the 'options' object I built, adding one character at a time. I'm not overly confident/experienced in using this type of loop so a few inefficiencies arose from that. I found that I had to pass in 'value' as a 2nd arg into the loop, even though I never referred to it. However, without it, I wasn't accessing the key I wanted. Also, I was afraid of reaching my requisite password length in the middle of that loop and then not breaking out of it properly, seeing as I had that 'for' loop already inside a 'while' loop. To get around those concerns, I intentionally overshot the prescribed password length (if it wasn't equally divisble by the number of sets chosen) to cleanly complete the last time through the loop, then after I formed the password, I chopped off the excess characters. It works fine, but I feel it does add some unnecessary steps compared to just exiting the loop mid-iteration effectively.
 
 Also, I noticed styling for a disabled button in the CSS; I chose not to disable the button after the password had been generated so that the user can just hit the button and run through the process again without reloading.
+
+I wasn't sure exactly which 'special' characters should be in that set, so I just picked the top keyboard row (SHIFT + numbers). 
 
 ## Credits
 
