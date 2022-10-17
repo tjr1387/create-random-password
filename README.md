@@ -10,7 +10,7 @@ The intention of this repo is to take an existing 'password generator' page and 
 
 N/A
 
-## Usage (incomplete)
+## Usage
 
 The user will be able to provide parameters for a password to be automatically generated. They will pick the password's length (between 8-128 characters, inclusive) and then select whether they want characters from four separate sets (uppercase letters, lowercase letters, number characters, 'special' characters). The user must pick at least one set of characters; if they don't, they'll need to run through the 'set selection' prompts again. In the case of more than one set being chosen (should occur very often), the algorithm will use an equal number (or as close to equal as possible) of characters from the selected sets, as well as 'shuffle' the characters around to make it as random as possible, and as evenly spread (across sets) as possible. This password will be displayed in the text area once the user answers all of the questions. Without reloading, the user can repeat the process again (if they so choose) by hitting the button.
 
