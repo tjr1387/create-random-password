@@ -93,6 +93,7 @@ function generatePassword() {
 
   // Begin password build; I'm doing it this way to get an equal (or close) number of characters from each selected set in the password
     // I'm going to overshoot on the character total, in order to complete a full for loop of the for the 'true' sets, then chop the excess off after
+    // This is a roundabout, overly complicated version of doing it; but I was scared of trying to exit my upcoming object-key loop halfway through a cycle!
     
   let genLoopIters = Math.floor(passwordLength / numSets) + 1;
 
@@ -115,6 +116,7 @@ function generatePassword() {
   }
   
   // Shuffles the array using the above shuffle algorithm
+    // Instead of building the _string_ version of the password inside the 'build' loop, I kept it as an array so I could do this!
   let shuffledArray = shuffleArray(resultArray);
 
   // Turns the array into a string
@@ -122,7 +124,7 @@ function generatePassword() {
 
   // Identifies the overshoot in length, if it exists
   let excessChars = resultString.length - passwordLength;
-  // Easiest way to chop the excess characters off; it does it from the start of the string, but that doesn't really matter for this
+  // Easiest way to chop the excess characters off; it does it from the start of the string, but that doesn't really matter for a jumble of random characters!
   if (excessChars > 0) {
     resultString = resultString.slice(excessChars);
   }
